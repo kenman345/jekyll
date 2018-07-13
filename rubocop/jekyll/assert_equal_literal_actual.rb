@@ -101,9 +101,9 @@ module RuboCop
             node.each_child_node.all?(&method(:literal?))
         end
 
-		    def assert_pattern?(method)
-		      EXP_ACT_MSG_PATTERN_METHODS.include?(method)
-		    end
+        def assert_pattern?(method)
+          EXP_ACT_MSG_PATTERN_METHODS.include?(method)
+        end
 
         def line_length_max
           config.for_cop('Metrics/LineLength')['Max'] # Defaults to 80

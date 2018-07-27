@@ -29,16 +29,14 @@ module Jekyll
       @collection = relations[:collection]
       @has_yaml_header = nil
 
-     unless data_file?
-        if draft?
-          categories_from_path("_drafts")
-        else
-          categories_from_path(collection.relative_directory)
-        end
+      if draft?
+        categories_from_path("_drafts")
+      else
+        categories_from_path(collection.relative_directory)
+      end
 
-        data.default_proc = proc do |_, key|
-          site.frontmatter_defaults.find(relative_path, collection.label, key)
-        end
+      data.default_proc = proc do |_, key|
+        site.frontmatter_defaults.find(relative_path, collection.label, key)
       end
 
       trigger_hooks(:post_init)
@@ -155,7 +153,7 @@ module Jekyll
 
     # Determine the column delimiter for ___SeparatedValue files.
     #
-    # Returns "\t" if extname is `.tsv`, returns "," otherwise 
+    # Returns "\t" if extname is `.tsv`, otherwise returns ",".
     def column_delimiter
       return "\t" if extname == ".tsv"
       ","
@@ -304,25 +302,7 @@ module Jekyll
       Jekyll.logger.debug "Reading:", relative_path
 
       if data_file?
-        data_file = {}
-        if delimiter_separated_file?
-          data_file[basename_without_ext] = CSV.read(path,
-                           :col_sep  => column_delimiter, 
-                           :headers  => true,
-                           :encoding => site.config["encoding"]).map(&:to_hash)
-        else
-          data_file[basename_without_ext] = SafeYAML.load_file(path)
-        end
-
-        #data = data_file["data"]
-        # data[basename_without_ext] = data_file[basename_without_ext]
-        if collection.label == "data"
-          Utils.deep_merge_hashes!(data, data_file)
-         # site.site_data[basename_without_ext] = data_file[basename_without_ext]
-         # data["data"] = data_file
-        else
-          @data = data_file[basename_without_ext]
-        end
+        read_data_file
       else
         begin
           merge_defaults
@@ -504,6 +484,23 @@ module Jekyll
         self.content = $POSTMATCH
         data_file = SafeYAML.load(Regexp.last_match(1))
         merge_data!(data_file, :source => "YAML front matter") if data_file
+      end
+    end
+
+    def read_data_file
+      data_file = if delimiter_separated_file?
+                    CSV.read(path,
+                             :col_sep  => column_delimiter,
+                             :headers  => true,
+                             :encoding => site.config["encoding"]).map(&:to_hash)
+                  else
+                    SafeYAML.load_file(path)
+                  end
+
+      if collection.label == "data"
+        data["data"] = data_file
+      else
+        @data = data_file
       end
     end
 

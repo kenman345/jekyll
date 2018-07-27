@@ -17,7 +17,7 @@ module Jekyll
             slug = doc.basename_without_ext.gsub(%r![^\w\s-]+!, "")
               .gsub(%r!(^|\b\s)\s+($|\s?\b)!, '\\1\\2')
               .gsub(%r!\s+!, "_")
-            subhash[slug] = doc.data[doc.basename_without_ext]
+            subhash[slug] = doc.data["data"]
           end
 
           hash

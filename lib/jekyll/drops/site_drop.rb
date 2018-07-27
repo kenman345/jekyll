@@ -29,7 +29,7 @@ module Jekyll
       end
 
       def data
-        @site_data ||= @obj.data
+        @site_data ||= @obj.site_data
       end
 
       def html_pages

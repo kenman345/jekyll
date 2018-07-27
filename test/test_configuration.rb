@@ -32,7 +32,7 @@ class TestConfiguration < JekyllUnitTest
           "permalink" => "/:categories/:year/:month/:day/:title:output_ext",
         },
         "data"  => {
-          "output"    => false,
+          "output" => false,
         },
       }
       assert_equal expected, result["collections"]
@@ -71,7 +71,15 @@ class TestConfiguration < JekyllUnitTest
     should "turn an array into a hash" do
       result = Configuration[{ "collections" => %w(methods) }].add_default_collections
       assert_instance_of Hash, result["collections"]
-      expected = { "posts" => { "output" => true }, "data" => { "output" => false }, "methods" => {} }
+      expected = {
+        "posts"   => {
+          "output" => true,
+        },
+        "data"    => {
+          "output" => false,
+        },
+        "methods" => {},
+      }
       assert_equal expected, result["collections"]
     end
 
@@ -84,7 +92,7 @@ class TestConfiguration < JekyllUnitTest
           "permalink" => "/:categories/:year/:month/:day/:title/",
         },
         "data"  => {
-          "output"    => false,
+          "output" => false,
         },
       }
       assert_equal expected, result["collections"]

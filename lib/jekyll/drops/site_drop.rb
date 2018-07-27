@@ -7,7 +7,7 @@ module Jekyll
 
       mutable false
 
-      #def_delegator  :@obj, :site_data
+      def_delegator  :@obj, :site_data, :data
       def_delegators :@obj, :time, :pages, :static_files, :documents, :tags, :categories
 
       private def_delegator :@obj, :config, :fallback_data
@@ -26,10 +26,6 @@ module Jekyll
 
       def posts
         @site_posts ||= @obj.posts.docs.sort { |a, b| b <=> a }
-      end
-
-      def data
-        @site_data ||= @obj.site_data
       end
 
       def html_pages

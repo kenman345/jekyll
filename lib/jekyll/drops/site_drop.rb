@@ -7,7 +7,7 @@ module Jekyll
 
       mutable false
 
-      def_delegator  :@obj, :site_data, :data
+      def_delegator  :@obj, :site_data
       def_delegators :@obj, :time, :pages, :static_files, :documents, :tags, :categories
 
       private def_delegator :@obj, :config, :fallback_data

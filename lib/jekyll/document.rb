@@ -498,7 +498,7 @@ module Jekyll
                   end
 
       if collection.label == "data"
-        data["data"] = data_file
+        data["data_file"] = data_file
       else
         @data = data_file
       end

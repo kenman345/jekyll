@@ -480,7 +480,9 @@ class TestConfiguration < JekyllUnitTest
             "output"    => true,
             "permalink" => "/:categories/:year/:month/:day/:title:output_ext",
           },
-          "data"  => {},
+          "data"  => {
+            "output" => false,
+          },
         }
       )
     end

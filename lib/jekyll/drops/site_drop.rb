@@ -39,7 +39,7 @@ module Jekyll
       end
 
       def special_collection_key?(key)
-        %w(posts data).include?(key)
+        key == "posts"
       end
 
       def collections

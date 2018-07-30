@@ -489,13 +489,13 @@ module Jekyll
 
     def read_data_file
       @data = if delimiter_separated_file?
-                    CSV.read(path,
-                             :col_sep  => column_delimiter,
-                             :headers  => true,
-                             :encoding => site.config["encoding"]).map(&:to_hash)
-                  else
-                    SafeYAML.load_file(path)
-                  end
+                CSV.read(path,
+                         :col_sep  => column_delimiter,
+                         :headers  => true,
+                         :encoding => site.config["encoding"]).map(&:to_hash)
+              else
+                SafeYAML.load_file(path)
+              end
     end
 
     def read_post_data

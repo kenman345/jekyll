@@ -172,6 +172,7 @@ module Jekyll
     #
     # Returns a representation of this collection for use in Liquid.
     def to_liquid
+      return Drops::DataDrop.new self if label == "data"
       Drops::CollectionDrop.new self
     end
 

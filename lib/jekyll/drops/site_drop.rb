@@ -13,7 +13,7 @@ module Jekyll
       private def_delegator :@obj, :config, :fallback_data
 
       def [](key)
-        if @obj.collections.key?(key) && !special_collection_key?(key)
+        if @obj.collections.key?(key) && !%w(posts data).include?(key)
           @obj.collections[key].docs
         else
           super(key)
@@ -21,7 +21,7 @@ module Jekyll
       end
 
       def key?(key)
-        (@obj.collections.key?(key) && !special_collection_key?(key)) || super
+        (@obj.collections.key?(key) && !%w(posts data).include?(key)) || super
       end
 
       def posts
@@ -32,10 +32,6 @@ module Jekyll
         @site_html_pages ||= @obj.pages.select do |page|
           page.html? || page.url.end_with?("/")
         end
-      end
-
-      def special_collection_key?(key)
-        key && %w(posts data).include?(key)
       end
 
       def collections

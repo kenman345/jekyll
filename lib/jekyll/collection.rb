@@ -161,6 +161,8 @@ module Jekyll
     # Returns a sanitized version of the label.
     def sanitize_label(label)
       label.gsub(%r![^a-z0-9_\-\.]!i, "")
+           .gsub(%r!(^|\b\s)\s+($|\s?\b)!, '\\1\\2')
+           .gsub(%r!\s+!, "_")
     end
 
     # Produce a representation of this Collection for use in Liquid.

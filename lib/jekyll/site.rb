@@ -465,6 +465,7 @@ module Jekyll
 
     def render_docs(payload)
       collections.each_value do |collection|
+        next if collection.label == "data"
         collection.docs.each do |document|
           render_regenerated(document, payload)
         end

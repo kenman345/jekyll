@@ -488,7 +488,7 @@ module Jekyll
     end
 
     def read_data_file
-      data_file = if delimiter_separated_file?
+      @data = if delimiter_separated_file?
                     CSV.read(path,
                              :col_sep  => column_delimiter,
                              :headers  => true,
@@ -496,12 +496,6 @@ module Jekyll
                   else
                     SafeYAML.load_file(path)
                   end
-
-      if collection.label == "data"
-        data["data_file"] = data_file
-      else
-        @data = data_file
-      end
     end
 
     def read_post_data
